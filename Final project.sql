@@ -70,6 +70,8 @@ go
 
 create table Shipping(
 id int primary key,
+minOrderValue float,
+maxOrderValue float,
 shipping_fee float
 );
 go
