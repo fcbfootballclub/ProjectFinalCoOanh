@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All students</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    function getAllStudent(){
+      $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/",
+        success: function (data) {
+          console.log(data);
+          displayStudent(data);
+        }
+      })
+    }
+
+    function displayStudent(data){
+      for(let i = 0; i < data.length; i++){
+        document.write(data[i].fullName + '<br>');
+      }
+    }
+
+  </script>
+
+</head>
+<body>
+<button onclick="getAllStudent()">Display all student</button>
+
+</body>
+</html>
