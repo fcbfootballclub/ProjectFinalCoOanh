@@ -22,6 +22,8 @@ public class Product {
     private String title;
     @Column(name = "description", nullable = false)
     private String description;
+    @Column(name = "link")
+    private String link;
     @Column(name = "price", nullable = false)
     private float price;
     @Column(name = "created_at", nullable = false)
