@@ -2,8 +2,6 @@ package com.example.final_v1.ProductType.Model;
 
 import com.example.final_v1.Product.Model.Product;
 import lombok.*;
-import org.springframework.stereotype.Controller;
-
 import javax.persistence.*;
 import java.util.Collection;
 

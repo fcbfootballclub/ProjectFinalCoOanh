@@ -1,11 +1,11 @@
 package com.example.final_v1.ProductType.Controller;
 
 import com.example.final_v1.ProductType.Model.ProductType;
-import com.example.final_v1.ProductType.Model.ResponseObj;
+import com.example.final_v1.ErrorHandler.ResponseObj;
 import com.example.final_v1.ProductType.Service.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+
 import java.util.Optional;
 
 @RestController
@@ -15,8 +15,8 @@ public class ProductTypeController {
     ProductTypeService productTypeService;
 
     @GetMapping(path = "")
-    List<ProductType> getAllProductType() {
-        return productTypeService.getAllProductType();
+    ResponseObj getAllProductType() {
+        return new ResponseObj("OK", "All product type", productTypeService.getAllProductType());
     }
 
     @GetMapping(path = "{id}")
@@ -26,8 +26,14 @@ public class ProductTypeController {
     }
 
     @PostMapping(path = "")
-    void addProductType(@RequestBody ProductType productType) {
-        productTypeService.addProductType(productType);
+    ResponseObj addProductType(@RequestBody ProductType productType) {
+        int i = productTypeService.addProductType(productType);
+        if(i == 1){
+            return new ResponseObj("OK", "Added successfully", productType);
+        }
+        else {
+            return new ResponseObj("Failed", "Invalid product type name", "");
+        }
     }
 
     @PutMapping(path = "{id}")

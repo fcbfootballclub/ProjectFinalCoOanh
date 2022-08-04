@@ -7,7 +7,7 @@ import java.util.Optional;
 public interface ProductTypeService {
     public List<ProductType> getAllProductType();
     public Optional<ProductType> getProductTypeById(long id);
-    public void addProductType(ProductType productType);
+    public int addProductType(ProductType productType);
     public int updateProductType(long id, ProductType productType);
     public int deleteProductType(long id);
 }

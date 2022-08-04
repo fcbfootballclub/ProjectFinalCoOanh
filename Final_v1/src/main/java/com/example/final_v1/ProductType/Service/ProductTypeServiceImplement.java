@@ -23,8 +23,12 @@ public class ProductTypeServiceImplement implements ProductTypeService{
     }
 
     @Override
-    public void addProductType(ProductType productType) {
-        productTypeRepository.save(productType);
+    public int addProductType(ProductType productType) {
+        if(!productTypeRepository.findAll().contains(productType)){
+            productTypeRepository.save(productType);
+            return 1;
+        }
+        return 0;
     }
 
     @Override

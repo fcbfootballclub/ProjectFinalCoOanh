@@ -1,4 +1,4 @@
-package com.example.final_v1.ProductType.Model;
+package com.example.final_v1.ErrorHandler;
 
 public class ResponseObj {
     private String status;
