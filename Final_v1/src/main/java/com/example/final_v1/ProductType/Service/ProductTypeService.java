@@ -8,6 +8,6 @@ public interface ProductTypeService {
     public List<ProductType> getAllProductType();
     public Optional<ProductType> getProductTypeById(long id);
     public void addProductType(ProductType productType);
-    public void updateProductType(long id, ProductType productType);
-    public void deleteProductType(long id);
+    public int updateProductType(long id, ProductType productType);
+    public int deleteProductType(long id);
 }

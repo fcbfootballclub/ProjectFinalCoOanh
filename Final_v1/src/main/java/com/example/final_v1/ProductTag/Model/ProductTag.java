@@ -17,6 +17,7 @@ public class ProductTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "tag_name", nullable = false, length = 20, unique = true)
     private String tagName;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

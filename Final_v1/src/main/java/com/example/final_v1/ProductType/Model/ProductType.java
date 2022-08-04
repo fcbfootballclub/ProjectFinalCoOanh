@@ -18,7 +18,7 @@ public class ProductType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "product_type", nullable = false)
+    @Column(name = "product_type", nullable = false, unique = true)
     private String product_type;
 
     @OneToMany(mappedBy = "productType", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Product)

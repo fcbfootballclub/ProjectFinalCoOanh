@@ -26,7 +26,7 @@ public class Product {
     private float price;
     @Column(name = "created_at", nullable = false)
     private Date created_at;
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at", nullable = true)
     private Date updated_at;
 
     // Many to One Có product trong một product type.
