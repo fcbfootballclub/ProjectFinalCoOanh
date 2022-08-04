@@ -2,6 +2,7 @@ package com.example.final_v1.Product.Model;
 
 import com.example.final_v1.ProductTag.Model.ProductTag;
 import com.example.final_v1.ProductType.Model.ProductType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import java.sql.Date;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Product")
+@Table(name = "product")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,9 +21,9 @@ public class Product {
     private long id;
     @Column(name = "title", length = 200, nullable = false)
     private String title;
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, length = 2000)
     private String description;
-    @Column(name = "link")
+    @Column(name = "link", nullable = false)
     private String link;
     @Column(name = "price", nullable = false)
     private float price;
@@ -36,12 +37,14 @@ public class Product {
     @JoinColumn(name = "id_product_type") // thông qua khóa ngoại id_product_type
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    @JsonIgnore
     private ProductType productType;
 
     // mappedBy trỏ tới tên biến persons ở trong Address.
     @ManyToMany(mappedBy = "products")
     // LAZY để tránh việc truy xuất dữ liệu không cần thiết. Lúc nào cần thì mới query
     @EqualsAndHashCode.Exclude
+    @JsonIgnore
     private Collection<ProductTag> productTags;
 
     @Override
