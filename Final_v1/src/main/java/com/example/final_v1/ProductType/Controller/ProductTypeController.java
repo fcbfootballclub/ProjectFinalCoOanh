@@ -5,7 +5,6 @@ import com.example.final_v1.ErrorHandler.ResponseObj;
 import com.example.final_v1.ProductType.Service.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Optional;
 
 @RestController
@@ -53,7 +52,7 @@ public class ProductTypeController {
         if(check == 1){
             return new ResponseObj("Oke", "Delete Success", "");
         }
-        return new ResponseObj("Fail", "Not found id : " + id, "");
+        return new ResponseObj("Failed", "Not found id : " + id, "");
     }
 
 }
