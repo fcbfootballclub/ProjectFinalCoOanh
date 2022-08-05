@@ -54,6 +54,6 @@ public class Product {
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        return ((Product) obj).title.equals(this.title);
     }
 }

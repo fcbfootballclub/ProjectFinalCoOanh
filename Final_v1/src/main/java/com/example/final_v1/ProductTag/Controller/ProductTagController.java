@@ -1,11 +1,9 @@
 package com.example.final_v1.ProductTag.Controller;
-
+import com.example.final_v1.ErrorHandler.ResponseObj;
 import com.example.final_v1.ProductTag.Model.ProductTag;
 import com.example.final_v1.ProductTag.Service.ProductTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -15,28 +13,37 @@ public class ProductTagController {
     ProductTagService productTagService;
 
     @GetMapping(path = "")
-    List<ProductTag> getAllTag(){
-        return productTagService.getAllTag();
+    ResponseObj getAllTag(){
+        return new ResponseObj("OK", "Get all products", productTagService.getAllTag());
     }
 
     @GetMapping(path = "{id}")
-    Optional<ProductTag> getTagById(@PathVariable long id){
-        return productTagService.getTagById(id);
+    ResponseObj getTagById(@PathVariable long id){
+        Optional<ProductTag> found = productTagService.getTagById(id);
+        return found.map(productTag -> new ResponseObj("OK", "Found tag", productTag)).orElseGet(() -> new ResponseObj("Failed", "Not found id" + id, ""));
     }
 
     @PostMapping(path = "")
-    void addNewTag(@RequestBody ProductTag productTag) {
-        productTagService.addTag(productTag);
+    ResponseObj addNewTag(@RequestBody ProductTag productTag) {
+        int check = productTagService.addTag(productTag);
+        if(check == 1) return new ResponseObj("OK", "Added successfully", productTag);
+        return new ResponseObj("Failed", "Not valid tag", "");
     }
 
     @PutMapping(path = "{id}")
-    void updateTag(@PathVariable long id, @RequestBody ProductTag productTag){
-      productTagService.updateTag(id, productTag);
+    ResponseObj updateTag(@PathVariable long id, @RequestBody ProductTag productTag){
+        int check = productTagService.updateTag(id, productTag);
+        if(check == 1) return new ResponseObj("OK", "Add tag successfully", productTag);
+        return new ResponseObj("Failed", "Update tag failed", productTag);
     }
 
     @DeleteMapping(path = "{id}")
-    void deleteTag(long id){
-        productTagService.deleteTag(id);
+    ResponseObj deleteTag(@PathVariable long id){
+        int check = productTagService.deleteTag(id);
+        if(check == 1){
+            return new ResponseObj("OK", "Delete successfully", "");
+        }
+        return new ResponseObj("Failed", "Delete failed", "");
     }
 
 }

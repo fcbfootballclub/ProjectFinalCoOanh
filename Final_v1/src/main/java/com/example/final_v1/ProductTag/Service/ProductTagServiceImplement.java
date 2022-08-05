@@ -24,21 +24,33 @@ public class ProductTagServiceImplement implements ProductTagService{
     }
 
     @Override
-    public void addTag(ProductTag tag) {
-        productTagRepository.save(tag);
+    public int addTag(ProductTag tag) {
+        List<ProductTag> allTag = productTagRepository.findAll();
+        if(!allTag.contains(tag)){
+            productTagRepository.save(tag);
+            return 1;
+        }
+        return 0;
     }
 
     @Override
-    public void updateTag(long id, ProductTag tag) {
+    public int updateTag(long id, ProductTag tag) {
         Optional<ProductTag> found = productTagRepository.findById(id);
         if(found.isPresent()){
             found.get().setTagName(tag.getTagName());
             productTagRepository.save(found.get());
+            return 1;
         }
+        return 0;
     }
 
     @Override
-    public void deleteTag(long id) {
-        productTagRepository.deleteById(id);
+    public int deleteTag(long id) {
+        Optional<ProductTag> found = productTagRepository.findById(id);
+        if(found.isPresent()){
+            productTagRepository.delete(found.get());
+            return 1;
+        }
+        return 0;
     }
 }

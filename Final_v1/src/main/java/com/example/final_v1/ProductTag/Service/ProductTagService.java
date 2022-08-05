@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface ProductTagService {
     public List<ProductTag> getAllTag();
     public Optional<ProductTag> getTagById(long id);
-    public void addTag(ProductTag tag);
-    public void updateTag(long id, ProductTag tag);
-    public void deleteTag(long id);
+    public int addTag(ProductTag tag);
+    public int updateTag(long id, ProductTag tag);
+    public int deleteTag(long id);
 }

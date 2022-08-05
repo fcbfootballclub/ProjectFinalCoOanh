@@ -4,7 +4,11 @@ import com.example.final_v1.Product.Model.Product;
 import com.example.final_v1.Product.Repository.ProductRepository;
 import com.example.final_v1.Product.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,12 +29,17 @@ public class ProductServiceImplement implements ProductService {
     }
 
     @Override
-    public void addProduct(Product product) {
-        productRepository.save(product);
+    public int addProduct(Product product) {
+        List<Product> allProducts = productRepository.findAll();
+        if(!allProducts.contains(product)){
+            productRepository.save(product);
+            return 1;
+        }
+        return 0;
     }
 
     @Override
-    public void updateProduct(long id, Product product) {
+    public int updateProduct(long id, Product product) {
         Optional<Product> found = productRepository.findById(id);
         if(found.isPresent()){
             found.get().setTitle(product.getTitle());
@@ -39,11 +48,24 @@ public class ProductServiceImplement implements ProductService {
             found.get().setProductTags(product.getProductTags());
             found.get().setUpdated_at(product.getUpdated_at());
             productRepository.save(found.get());
+            return 1;
         }
+        return 0;
     }
 
     @Override
-    public void deleteProduct(long id) {
-        productRepository.deleteById(id);
+    public int deleteProduct(long id) {
+        Optional<Product> found = productRepository.findById(id);
+        if(found.isPresent()){
+            productRepository.delete(found.get());
+            return 1;
+        }
+        return 0;
+    }
+
+    @Override
+    public Page<Product> findPaginate(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return productRepository.findAll(pageable);
     }
 }
