@@ -36,7 +36,7 @@ public class ProductTypeServiceImplement implements ProductTypeService{
     public int updateProductType(long id, ProductType productType) {
         Optional<ProductType> found = productTypeRepository.findById(id);
         if(found.isPresent()){
-            found.get().setProduct_type(productType.getProduct_type());
+            found.get().setProductType(productType.getProductType());
             productTypeRepository.save(found.get());
             return 1;
         }

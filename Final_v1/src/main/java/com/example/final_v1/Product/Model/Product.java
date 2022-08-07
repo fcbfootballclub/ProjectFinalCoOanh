@@ -37,7 +37,6 @@ public class Product {
     @JoinColumn(name = "id_product_type") // thông qua khóa ngoại id_product_type
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @JsonIgnore
     private ProductType productType;
 
     // mappedBy trỏ tới tên biến persons ở trong Address.
