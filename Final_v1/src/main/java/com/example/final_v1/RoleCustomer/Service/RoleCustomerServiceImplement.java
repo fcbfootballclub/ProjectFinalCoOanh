@@ -15,4 +15,10 @@ public class RoleCustomerServiceImplement implements RoleCustomerService{
     public List<RoleCustomer> getAllUserRole() {
         return roleCustomerRepository.findAll();
     }
+
+    @Override
+    public int addRoleCustomer(RoleCustomer roleCustomer) {
+        roleCustomerRepository.save(roleCustomer);
+        return 1;
+    }
 }

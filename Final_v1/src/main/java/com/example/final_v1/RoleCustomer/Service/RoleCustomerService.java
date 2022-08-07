@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface RoleCustomerService {
     List<RoleCustomer> getAllUserRole();
+
+    int addRoleCustomer(RoleCustomer roleCustomer);
 }
