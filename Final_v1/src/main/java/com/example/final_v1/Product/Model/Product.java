@@ -28,7 +28,7 @@ public class Product {
     private String link;
     @Column(name = "price", nullable = false)
     private float price;
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = true)
     private Date created_at;
     @Column(name = "updated_at", nullable = true)
     private Date updated_at;
@@ -63,14 +63,20 @@ public class Product {
         return Objects.hash(id);
     }
 
-    public Product(String title, String description, String link, float price, long productTypeID) {
-//        ProductTypeService productTypeService = new ProductTypeServiceImplement();
-//        Optional<ProductType> found = productTypeService.getProductTypeById(productTypeID);
+    public Product(String title, String description, String link, float price, ProductType productType) {
         this.title = title;
         this.description = description;
         this.link = link;
         this.price = price;
-        this.productType = new ProductType();
-        this.productType.setId(productTypeID);
+        this.productType = productType;
+        this.created_at = Date.valueOf("2022-10-10");
+    }
+
+    public Collection<ProductTag> getProductTags() {
+        return productTags;
+    }
+
+    public void setProductTags(Collection<ProductTag> productTags) {
+        this.productTags = productTags;
     }
 }
