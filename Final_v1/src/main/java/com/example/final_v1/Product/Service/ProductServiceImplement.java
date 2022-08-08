@@ -3,6 +3,7 @@ package com.example.final_v1.Product.Service;
 import com.example.final_v1.Product.Model.Product;
 import com.example.final_v1.Product.Repository.ProductRepository;
 import com.example.final_v1.Product.Service.ProductService;
+import com.example.final_v1.ProductTag.Model.ProductTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -1,6 +1,6 @@
 package com.example.final_v1.ProductTag.Service;
 
-import com.example.final_v1.ProductTag.Controller.Model.ProductTag;
+import com.example.final_v1.ProductTag.Model.ProductTag;
 
 import java.util.List;
 import java.util.Optional;

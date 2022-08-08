@@ -1,10 +1,13 @@
-package com.example.final_v1.ProductTag.Controller.Model;
+package com.example.final_v1.ProductTag.Model;
 
 import com.example.final_v1.Product.Model.Product;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "product_tag")
@@ -21,7 +24,8 @@ public class ProductTag {
     @Column(name = "tag_name", nullable = false, length = 20, unique = true)
     private String tagName;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
     @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
     @ToString.Exclude // Khoonhg sử dụng trong toString()
     @JoinTable(name = "product_and_tag", //Tạo ra một join Table tên là "Product_Tag"
@@ -29,7 +33,7 @@ public class ProductTag {
             inverseJoinColumns = @JoinColumn(name = "id_product") //Khóa ngoại thứ 2 trỏ tới thuộc tính ở dưới (Person)
     )
     @JsonIgnore
-    private Collection<Product> products;
+    private Set<Product> products;
 
 
     @Override

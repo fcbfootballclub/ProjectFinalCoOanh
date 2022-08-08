@@ -1,14 +1,19 @@
 package com.example.final_v1.Product.Model;
 
 import com.example.final_v1.OrderDetail.Model.OrderDetail;
-import com.example.final_v1.ProductTag.Controller.Model.ProductTag;
+import com.example.final_v1.ProductTag.Model.ProductTag;
 import com.example.final_v1.ProductType.Model.ProductType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "product")
@@ -28,9 +33,11 @@ public class Product {
     private String link;
     @Column(name = "price", nullable = false)
     private float price;
-    @Column(name = "created_at", nullable = true)
+    @Column(name = "created_at", nullable = true, updatable = false)
+    @CreationTimestamp
     private Date created_at;
     @Column(name = "updated_at", nullable = true)
+    @UpdateTimestamp
     private Date updated_at;
 
     // Many to One Có product trong một product type.
@@ -42,9 +49,9 @@ public class Product {
 
     // mappedBy trỏ tới tên biến persons ở trong Address.
     @ManyToMany(mappedBy = "products")
-    // LAZY để tránh việc truy xuất dữ liệu không cần thiết. Lúc nào cần thì mới query
+    @JsonBackReference
     @EqualsAndHashCode.Exclude
-    private Collection<ProductTag> productTags;
+    private Set<ProductTag> productTags;
 
     @OneToMany(mappedBy = "product")
     @EqualsAndHashCode.Exclude
@@ -72,11 +79,8 @@ public class Product {
         this.created_at = Date.valueOf("2022-10-10");
     }
 
-    public Collection<ProductTag> getProductTags() {
-        return productTags;
-    }
-
-    public void setProductTags(Collection<ProductTag> productTags) {
-        this.productTags = productTags;
+    public static void main(String[] args) {
+        Product product = new Product();
+        System.out.println(product.getCreated_at());
     }
 }
