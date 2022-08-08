@@ -1,8 +1,8 @@
-package com.example.final_v1.ProductTag.Model;
+package com.example.final_v1.ProductTag.Controller.Model;
 
 import com.example.final_v1.Product.Model.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -24,10 +24,24 @@ public class ProductTag {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
     @ToString.Exclude // Khoonhg sử dụng trong toString()
-
     @JoinTable(name = "product_and_tag", //Tạo ra một join Table tên là "Product_Tag"
             joinColumns = @JoinColumn(name = "id_tag"),  // TRong đó, khóa ngoại chính là address_id trỏ tới class hiện tại (Address)
             inverseJoinColumns = @JoinColumn(name = "id_product") //Khóa ngoại thứ 2 trỏ tới thuộc tính ở dưới (Person)
     )
+    @JsonIgnore
     private Collection<Product> products;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductTag that = (ProductTag) o;
+        return id == that.id || this.tagName.equals(that.tagName);
+    }
+
+    @Override
+    public int hashCode() {
+        return tagName.hashCode();
+    }
 }

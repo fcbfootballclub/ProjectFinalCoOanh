@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "product_type")
@@ -30,5 +31,18 @@ public class ProductType {
     //constructor
     public ProductType(String productType) {
         this.productType = productType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductType that = (ProductType) o;
+        return id == that.id || productType.equals(that.productType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productType);
     }
 }

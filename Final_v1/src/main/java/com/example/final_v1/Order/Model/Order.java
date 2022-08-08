@@ -1,19 +1,21 @@
 package com.example.final_v1.Order.Model;
 
 import com.example.final_v1.Customer.Model.Customer;
+import com.example.final_v1.OrderDetail.Model.OrderDetail;
 import com.example.final_v1.Shipping.Model.Shipping;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collection;
 
 @Entity
 @Table(name = "tblOrder")
 @Getter
 @Setter
+@AllArgsConstructor
+@ToString
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +30,14 @@ public class Order {
     private String shippingPhone;
     @Column(name = "note")
     private String note;
-    @Column(name = "created_at")
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private Date createdAt;
+    @UpdateTimestamp
     @Column(name = "modified_at")
     private Date modifiedAt;
     @Column(name = "order_status")
-    private boolean status;
+    private boolean status; //0 chưa giao hàng, 1 là đã giao hàng
 
     @ManyToOne
     @JoinColumn(name = "id_customer")
@@ -45,4 +49,19 @@ public class Order {
     @JoinColumn(name = "id_shipping_fee")
     @EqualsAndHashCode.Exclude
     private Shipping shipping;
+
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+    @ToString.Exclude
+    private Collection<OrderDetail> orderDetails;
+
+    public Order() {
+    }
+
+    public static void main(String[] args) {
+        Order order = new Order();
+        System.out.println(order);
+        System.out.println(order.getCreatedAt());
+    }
 }

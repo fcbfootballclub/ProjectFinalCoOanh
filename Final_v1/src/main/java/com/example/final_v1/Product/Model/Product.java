@@ -1,13 +1,14 @@
 package com.example.final_v1.Product.Model;
 
-import com.example.final_v1.ProductTag.Model.ProductTag;
+import com.example.final_v1.OrderDetail.Model.OrderDetail;
+import com.example.final_v1.ProductTag.Controller.Model.ProductTag;
 import com.example.final_v1.ProductType.Model.ProductType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "product")
@@ -43,16 +44,33 @@ public class Product {
     @ManyToMany(mappedBy = "products")
     // LAZY để tránh việc truy xuất dữ liệu không cần thiết. Lúc nào cần thì mới query
     @EqualsAndHashCode.Exclude
-    @JsonIgnore
     private Collection<ProductTag> productTags;
 
-    @Override
-    public int hashCode() {
-        return (int) id;
-    }
+    @OneToMany(mappedBy = "product")
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private Collection<OrderDetail> orderDetails;
 
     @Override
-    public boolean equals(Object obj) {
-        return ((Product) obj).title.equals(this.title);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id == product.id || Objects.equals(title, product.title);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    public Product(String title, String description, String link, float price, long productTypeID) {
+//        ProductTypeService productTypeService = new ProductTypeServiceImplement();
+//        Optional<ProductType> found = productTypeService.getProductTypeById(productTypeID);
+        this.title = title;
+        this.description = description;
+        this.link = link;
+        this.price = price;
+        this.productType = new ProductType();
+        this.productType.setId(productTypeID);
     }
 }
