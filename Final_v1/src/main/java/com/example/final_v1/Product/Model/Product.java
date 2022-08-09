@@ -43,8 +43,6 @@ public class Product {
     // Many to One Có product trong một product type.
     @ManyToOne
     @JoinColumn(name = "id_product_type") // thông qua khóa ngoại id_product_type
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     private ProductType productType;
 
     // mappedBy trỏ tới tên biến persons ở trong Address.

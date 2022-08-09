@@ -4,6 +4,7 @@ import com.example.final_v1.Product.Model.Product;
 import com.example.final_v1.Product.Repository.ProductRepository;
 import com.example.final_v1.Product.Service.ProductService;
 import com.example.final_v1.ProductTag.Model.ProductTag;
+import com.example.final_v1.ProductTag.Repository.ProductTagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,11 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProductServiceImplement implements ProductService {
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    ProductTagRepository productTagRepository;
 
     @Override
     public List<Product> getAllProduct() {
@@ -34,7 +39,15 @@ public class ProductServiceImplement implements ProductService {
         List<Product> allProducts = productRepository.findAll();
         if(!allProducts.contains(product)){
             productRepository.save(product);
-            return 1;
+
+            Set<ProductTag> tagList = product.getProductTags();
+            if(tagList != null) {
+                for(ProductTag productTag : tagList){
+                    productTag.getProducts().add(product);
+                    productTagRepository.save(productTag);
+                }
+                return 1;
+            }
         }
         return 0;
     }

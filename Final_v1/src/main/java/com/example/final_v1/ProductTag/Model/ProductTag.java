@@ -25,7 +25,6 @@ public class ProductTag {
     private String tagName;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference
     @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
     @ToString.Exclude // Khoonhg sử dụng trong toString()
     @JoinTable(name = "product_and_tag", //Tạo ra một join Table tên là "Product_Tag"
