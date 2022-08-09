@@ -38,6 +38,9 @@ public class ProductServiceImplement implements ProductService {
     public int addProduct(Product product) {
         List<Product> allProducts = productRepository.findAll();
         if(!allProducts.contains(product)){
+            System.out.println("-----------------------------");
+            System.out.println("-----------------------------");
+            System.out.println(" ++++++ : " + product.getProductTags());
             productRepository.save(product);
 
             Set<ProductTag> tagList = product.getProductTags();
