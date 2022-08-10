@@ -25,7 +25,7 @@ public class ProductType {
     // MapopedBy trỏ tới tên biến.
     @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
     @ToString.Exclude // Khoonhg sử dụng trong toString()
-//    @JsonIgnore
+    @JsonIgnore
     private Collection<Product> products;
 
     //constructor

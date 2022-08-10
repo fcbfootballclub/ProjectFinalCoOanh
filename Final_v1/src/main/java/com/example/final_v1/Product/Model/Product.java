@@ -46,10 +46,9 @@ public class Product {
     private ProductType productType;
 
     // mappedBy trỏ tới tên biến persons ở trong Address.
-    @ManyToMany(mappedBy = "products")
-    @JsonBackReference
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
-    private Set<ProductTag> productTags;
+    private Collection<ProductTag> productTags;
 
     @OneToMany(mappedBy = "product")
     @EqualsAndHashCode.Exclude

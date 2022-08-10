@@ -24,6 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //config cac trang khong can login
         http.authorizeRequests().antMatchers("/products/*").permitAll();
         http.authorizeRequests().antMatchers("/api/*").permitAll();
+        http.authorizeRequests().antMatchers("/").permitAll();
 
         //con lai phai log in
 //        http.authorizeRequests().anyRequest().authenticated();

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -38,19 +39,27 @@ public class ProductServiceImplement implements ProductService {
     public int addProduct(Product product) {
         List<Product> allProducts = productRepository.findAll();
         if(!allProducts.contains(product)){
-            System.out.println("-----------------------------");
-            System.out.println("-----------------------------");
+            System.out.println("----------------------------------------------");
+            System.out.println("----------------------------------------------");
+            System.out.println("----------------------------------------------");
+            System.out.println("----------------------------------------------");
             System.out.println(" ++++++ : " + product.getProductTags());
-            productRepository.save(product);
 
-            Set<ProductTag> tagList = product.getProductTags();
+            Collection<ProductTag> tagList = product.getProductTags();
             if(tagList != null) {
                 for(ProductTag productTag : tagList){
+                    System.out.println(productTag);
+                    System.out.println(productTag.getProducts());
                     productTag.getProducts().add(product);
-                    productTagRepository.save(productTag);
+                    System.out.println("2222222222222222222222222");
+                    System.out.println("2222222222222222222222222");
+                    System.out.println("2222222222222222222222222");
+                    System.out.println("----------------------------------------------");
+                    System.out.println(" ++++++ : " + productTag.getProducts());
                 }
-                return 1;
+                productRepository.save(product);
             }
+            return 1;
         }
         return 0;
     }

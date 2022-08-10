@@ -1,9 +1,6 @@
 package com.example.final_v1.ProductTag.Model;
-
 import com.example.final_v1.Product.Model.Product;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
@@ -25,15 +22,14 @@ public class ProductTag {
     private String tagName;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
-    @ToString.Exclude // Khoonhg sử dụng trong toString()
-    @JoinTable(name = "product_and_tag", //Tạo ra một join Table tên là "Product_Tag"
-            joinColumns = @JoinColumn(name = "id_tag"),  // TRong đó, khóa ngoại chính là address_id trỏ tới class hiện tại (Address)
-            inverseJoinColumns = @JoinColumn(name = "id_product") //Khóa ngoại thứ 2 trỏ tới thuộc tính ở dưới (Person)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JoinTable(name = "product_and_tag",
+            joinColumns = @JoinColumn(name = "id_tag"),
+            inverseJoinColumns = @JoinColumn(name = "id_product")
     )
     @JsonIgnore
-    private Set<Product> products;
-
+    private Collection<Product> products;
 
     @Override
     public boolean equals(Object o) {
@@ -46,5 +42,13 @@ public class ProductTag {
     @Override
     public int hashCode() {
         return tagName.hashCode();
+    }
+
+    public Collection<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Collection<Product> products) {
+        this.products = products;
     }
 }
